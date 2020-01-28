@@ -1,29 +1,92 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: "/1",
+    name: "menu1",
+    meta: {
+      title: "menu1",
+      icon: "mdi-home"
+    }
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/2",
+    name: "menu2",
+    meta: {
+      title: "menu2",
+      icon: "mdi-folder"
+    },
+    children: [
+      {
+        path: "/2-1",
+        name: "menu2-1",
+        meta: {
+          title: "menu2-1",
+          icon: "mdi-folder"
+        },
+        children: [
+          {
+            path: "/2-1-1",
+            name: "menu2-1-1",
+            meta: {
+              title: "menu2-1-1",
+              icon: "mdi-folder"
+            },
+            children: [
+              {
+                path: "/2-1-1-1",
+                name: "menu2-1-1-1",
+                meta: {
+                  title: "menu2-1-1-1",
+                  icon: "mdi-folder"
+                },
+                children: [
+                  {
+                    path: "/2-1-1-1-1",
+                    name: "menu2-1-1-1-1",
+                    meta: {
+                      title: "menu2-1-1-1-1",
+                      icon: "mdi-folder"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: "/2-1-2",
+            name: "menu2-1-2",
+            meta: {
+              title: "menu2-1-2",
+              icon: "mdi-folder"
+            }
+          }
+        ]
+      },
+      {
+        path: "/2-2",
+        name: "menu2-2",
+        meta: {
+          title: "menu2-2",
+          icon: "mdi-folder"
+        }
+      }
+    ]
+  },
+  {
+    path: "/3",
+    name: "menu3",
+    meta: { title: "menu3", icon: "mdi-account" }
   }
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+export default router;
