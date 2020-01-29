@@ -43,8 +43,8 @@ const routes = [
   {
     path: "/nested",
     name: "Nested",
-    redirect: { name: "Menu1" },
     meta: { title: "Nested", icon: "mdi-xbox-controller-menu" },
+    redirect: { name: "Menu1" },
     component: renderRouterView,
     children: [
       {
@@ -58,6 +58,7 @@ const routes = [
         path: "menu2",
         name: "Menu2",
         meta: { title: "Menu2", icon: "mdi-menu" },
+        redirect: { name: "Menu2_1" },
         component: renderRouterView,
         children: [
           {
@@ -73,6 +74,7 @@ const routes = [
             path: "menu2_2",
             name: "Menu2_2",
             meta: { title: "Menu2-2", icon: "mdi-menu" },
+            redirect: { name: "Menu2_2_1" },
             component: renderRouterView,
             children: [
               {
@@ -96,7 +98,7 @@ const routes = [
             ]
           },
           {
-            path: "/nested/menu2/menu2_3",
+            path: "menu2_3",
             name: "Menu2_3",
             meta: { title: "Menu2-3" },
             component: () =>

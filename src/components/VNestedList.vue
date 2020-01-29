@@ -16,7 +16,7 @@
         </template>
 
         <!-- 递归组件 -->
-        <v-nested-list :propsRoutes="route.children"></v-nested-list>
+        <v-nested-list :propsRoutes="route.children" />
       </v-list-group>
 
       <!--  :to="{ name: route.name }" 基于命名路由的路由跳转  -->
