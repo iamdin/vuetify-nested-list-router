@@ -1,13 +1,13 @@
 <template>
   <nav>
     <v-navigation-drawer permanent v-model="drawer" app>
-      <my-list-group :routes="routes" />
+      <v-nested-list :propsRoutes="routes" />
     </v-navigation-drawer>
   </nav>
 </template>
 
 <script>
-import MyListGroup from "./MyListGroup";
+import VNestedList from "./VNestedList";
 export default {
   name: "NavBar",
   data() {
@@ -20,7 +20,7 @@ export default {
       return this.$router.options.routes;
     }
   },
-  components: { MyListGroup }
+  components: { VNestedList }
 };
 </script>
 

@@ -2,17 +2,19 @@
   <v-list>
     <div v-for="route in routes" :key="route.path">
       <v-list-group
+        :group="route.path"
         v-if="route.children"
         :class="isRootRoute(route) ? '' : 'ml-5'"
+        eager
       >
         <template #activator>
-          <v-list-item-icon>
+          <v-list-item-icon v-if="route.meta.icon">
             <v-icon>{{ route.meta.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-title>{{ route.meta.title }}</v-list-item-title>
         </template>
 
-        <my-list-group :routes="route.children"></my-list-group>
+        <v-nested-list :propsRoutes="route.children"></v-nested-list>
       </v-list-group>
       <v-list-item
         v-else
@@ -20,7 +22,7 @@
         :class="isRootRoute(route) ? '' : 'ml-5'"
         color="success"
       >
-        <v-list-item-icon>
+        <v-list-item-icon v-if="route.meta.icon">
           <v-icon>{{ route.meta.icon }}</v-icon>
         </v-list-item-icon>
         <v-list-item-title>{{ route.meta.title }}</v-list-item-title>
@@ -31,9 +33,9 @@
 
 <script>
 export default {
-  name: "MyListGroup",
+  name: "VNestedList",
   props: {
-    routes: {
+    propsRoutes: {
       type: Array,
       required: true,
       default: () => {
@@ -41,12 +43,17 @@ export default {
       }
     }
   },
-  data: () => ({}),
+  computed: {
+    routes() {
+      return this.propsRoutes.filter(item => !item.hideInMenu);
+    }
+  },
   methods: {
     isRootRoute(route) {
       return this.$router.options.routes.includes(route);
     }
-  }
+  },
+  created() {}
 };
 </script>
 

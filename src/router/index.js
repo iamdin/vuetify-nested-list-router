@@ -1,85 +1,131 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Dashboard from "../views/Dashboard";
+import Nested from "../views/nested/Nested";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/1",
-    name: "menu1",
-    meta: {
-      title: "menu1",
-      icon: "mdi-home"
-    }
+    path: "/",
+    redirect: "/dashboard",
+    hideInMenu: true
   },
   {
-    path: "/2",
-    name: "menu2",
+    path: "/dashboard",
+    name: "Dashboard",
     meta: {
-      title: "menu2",
-      icon: "mdi-folder"
+      title: "Dashboard",
+      icon: "mdi-view-dashboard"
     },
+    component: Dashboard
+  },
+  {
+    path: "/nested",
+    name: "Nested",
+    meta: {
+      title: "Nested",
+      icon: "mdi-xbox-controller-menu"
+    },
+    component: () =>
+      import(/* webpackChunkName: "Nested" */ "../views/nested/Nested"),
     children: [
       {
-        path: "/2-1",
-        name: "menu2-1",
+        path: "/nested/menu1",
+        name: "Menu1",
         meta: {
-          title: "menu2-1",
-          icon: "mdi-folder"
+          title: "Menu1"
         },
+        component: () =>
+          import(/* webpackChunkName: "Menu1" */ "../views/nested/Menu1")
+      },
+      {
+        path: "/nested/menu2",
+        name: "menu2",
+        meta: {
+          title: "Menu2",
+          icon: "mdi-menu"
+        },
+        component: () =>
+          import(/* webpackChunkName: "Menu2" */ "../views/nested/menu2/Menu2"),
         children: [
           {
-            path: "/2-1-1",
-            name: "menu2-1-1",
+            path: "/nested/menu2/menu2_1",
+            name: "Menu2_1",
             meta: {
-              title: "menu2-1-1",
-              icon: "mdi-folder"
+              title: "Menu2-1"
             },
+            component: () =>
+              import(
+                /* webpackChunkName: "Menu2_1" */ "../views/nested/menu2/Menu2_1"
+              )
+          },
+          {
+            path: "/nested/menu2/menu2_2",
+            name: "Menu2_2",
+            meta: {
+              title: "Menu2-2",
+              icon: "mdi-menu"
+            },
+            component: () =>
+              import(
+                /* webpackChunkName: "Menu2_2" */ "../views/nested/menu2/menu2-2/Menu2_2"
+              ),
             children: [
               {
-                path: "/2-1-1-1",
-                name: "menu2-1-1-1",
+                path: "/nested/menu2/menu2_2/menu2_2_1",
+                name: "Menu2_2_1",
                 meta: {
-                  title: "menu2-1-1-1",
-                  icon: "mdi-folder"
+                  title: "Menu2-2-1"
                 },
-                children: [
-                  {
-                    path: "/2-1-1-1-1",
-                    name: "menu2-1-1-1-1",
-                    meta: {
-                      title: "menu2-1-1-1-1",
-                      icon: "mdi-folder"
-                    }
-                  }
-                ]
+                component: () =>
+                  import(
+                    /* webpackChunkName: "Menu2_2_1" */ "../views/nested/menu2/menu2-2/Menu2_2_1"
+                  )
+              },
+              {
+                path: "/nested/menu2/menu2_2/menu2_2_2",
+                name: "Menu2_2_2",
+                meta: {
+                  title: "Menu2-2-2"
+                },
+                component: () =>
+                  import(
+                    /* webpackChunkName: "Menu2_2_2" */ "../views/nested/menu2/menu2-2/Menu2_2_2"
+                  )
               }
             ]
           },
           {
-            path: "/2-1-2",
-            name: "menu2-1-2",
+            path: "/nested/menu2/menu2_3",
+            name: "Menu2_3",
             meta: {
-              title: "menu2-1-2",
-              icon: "mdi-folder"
-            }
+              title: "Menu2-3"
+            },
+            component: () =>
+              import(
+                /* webpackChunkName: "Menu2_3" */ "../views/nested/menu2/Menu2_3"
+              )
           }
         ]
       },
       {
-        path: "/2-2",
-        name: "menu2-2",
-        meta: {
-          title: "menu2-2",
-          icon: "mdi-folder"
-        }
+        path: "/nested/menu3",
+        name: "Menu3",
+        meta: { title: "Menu3" },
+        component: () =>
+          import(/* webpackChunkName: "Menu3" */ "../views/nested/Menu3")
       }
     ]
   },
   {
-    path: "/3",
-    name: "menu3",
-    meta: { title: "menu3", icon: "mdi-account" }
+    path: "/github",
+    name: "Github",
+    meta: {
+      title: "Github",
+      icon: "mdi-github-circle"
+    },
+    component: () => import(/* webpackChunkName: "Github" */ "../views/Github")
   }
 ];
 
