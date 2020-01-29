@@ -5,6 +5,20 @@ import Nested from "../views/nested/Nested";
 
 Vue.use(VueRouter);
 
+/*
+ * 基于递归组件的路由表的编写遵循以下原则：
+
+ * · hideInMenu为true时，该路由将不会添加在侧边导航栏中
+ * · meta：{ 
+ *     title //  导航栏列表文本
+ *     icon  // 导航栏列表图标，没有则不会渲染
+ *   }
+ * · 每个含有children属性的对象都要有自己的component，且其中包含 <router-view />，保证子组件能够渲染
+ * · 嵌套路由的path必须填写全部路径，例：/nested/menu2/menu2_2/menu2_2_1
+ *  （ 递归List组件设计之初未考虑到嵌套路由的渲染问题，导致使用这种解决方案 ）
+ * 
+ */
+
 const routes = [
   {
     path: "/",
@@ -126,6 +140,11 @@ const routes = [
       icon: "mdi-github-circle"
     },
     component: () => import(/* webpackChunkName: "Github" */ "../views/Github")
+  },
+  {
+    path: "*",
+    name: "NotFound",
+    hideInMenu: true
   }
 ];
 
