@@ -1,31 +1,30 @@
 # vuetify-nested-list-router
 
-基于 Vuetify 组件库实现侧边导航栏，使用`<v-list>`组件通过组件递归，适应嵌套路由
+基于 Vuetify 组件库的`<v-list>`组件套件，通过组件递归，适应动态无限嵌套路由的侧标导航栏
 
-## `<v-nested-list> </v-nested-list>`
+## `<v-nested-list />`
 
-使用Vuetify的`<v-list>`,`<v-list-item>`,`<v-list-group>`组件实现的嵌套列表，并在`<v-list-group>`中调用自身，实现组件递归
+使用Vuetify的`<v-list>`,`<v-list-item>`,`<v-list-group>`组件实现的嵌套列表，通过在`<v-list-group>`中调用自身（组件递归），完成对无限嵌套的路由表生成导航栏，从而适应动态路由表的需求
 
-### prop
+#### prop
 
 ```javascript
 props: {
-  propsRoutes: {	//向组件传递参数，数组
-    type: Array,
-    required: true,
-    default: () => {
-      return [];
+    propsRoutes: {		//list数组
+        type: Array,
+        required: true,
+        default: []
+    },
+    activeColor: {		//列表项active状态时的背景颜色
+        type: String,
+        default: "success"
     }
-  }
-}
+},
 ```
 
-## Todo
+## router规则
 
-存在一个问题需要解决（递归List组件设计之初未考虑到嵌套子路由的问题，导致......）
-
-- [ ] 未解决嵌套路由的子路由问题，目前路由的 path 属性必须全写路径，
-
-> 虽然基于Vuetify的`v-list`套件实现了递归List，从而能够更好的用于根据路由表生成侧边导航栏，解决了基于路由表嵌套逐个配置侧边栏组件的繁琐，但是上述两个问题仍存在一些繁琐路由配置。
->
-> 在路由表相当庞大且存在嵌套的情况下，此种方法还是能省去不少麻烦
+- `hideInMenu: boolean`,过滤路由中不渲染在导航栏的路径
+- `meta: {title: "",icon: ""}`定义导航栏中的图标及文字
+- 基于命名路由的路由跳转，故要求路径对象的name属性必须唯一
+- 嵌套路由渲染需要父组件中含有`<router-view/>`保证组件的渲染，通过`component：{ render: h => h("router-view") }`使用render函数渲染`<router-view/>`，不必在使用.vue单文件组件
