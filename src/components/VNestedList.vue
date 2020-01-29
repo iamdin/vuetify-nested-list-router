@@ -17,9 +17,10 @@
 
         <v-nested-list :propsRoutes="route.children"></v-nested-list>
       </v-list-group>
+      <!--      <router-link >-->
       <v-list-item
         v-else
-        :to="route.path"
+        :to="{ name: route.name }"
         :class="isRootRoute(route) ? '' : 'ml-5'"
         color="success"
       >
@@ -28,6 +29,7 @@
         </v-list-item-icon>
         <v-list-item-title>{{ route.meta.title }}</v-list-item-title>
       </v-list-item>
+      <!--      </router-link>-->
     </div>
   </v-list>
 </template>
@@ -52,6 +54,10 @@ export default {
   methods: {
     isRootRoute(route) {
       return this.$router.options.routes.includes(route);
+    },
+    listItemTo(route) {
+      console.log(route);
+      return route.path;
     }
   },
   created() {}
