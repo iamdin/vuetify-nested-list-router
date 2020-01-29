@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Dashboard from "../views/Dashboard";
-import Nested from "../views/nested/Nested";
 
 Vue.use(VueRouter);
 
@@ -14,16 +13,25 @@ Vue.use(VueRouter);
  *     icon  // 导航栏列表图标，没有则不会渲染
  *   }
  * · 每个含有children属性的对象都要有自己的component，且其中包含 <router-view />，保证子组件能够渲染
- * · 嵌套路由的path必须填写全部路径，例：/nested/menu2/menu2_2/menu2_2_1
- *  （ 递归List组件设计之初未考虑到嵌套路由的渲染问题，导致使用这种解决方案 ）
- * 
+ *   使用render函数只渲染<router-view>标签，不需要单独写一个.vue单文件组件
+ *
+ * · 使用命名路由导航，每个路由的name属性要唯一
  */
+
+const renderRouterView = { render: h => h("router-view") };
 
 const routes = [
   {
     path: "/",
     redirect: "/dashboard",
     hideInMenu: true
+  },
+  {
+    path: "/404",
+    name: "NotFound",
+    hideInMenu: true,
+    component: () =>
+      import(/* webpackChunkName: "Github" */ "../views/NotFound")
   },
   {
     path: "/dashboard",
@@ -37,15 +45,15 @@ const routes = [
   {
     path: "/nested",
     name: "Nested",
+    redirect: { name: "Menu1" },
     meta: {
       title: "Nested",
       icon: "mdi-xbox-controller-menu"
     },
-    component: () =>
-      import(/* webpackChunkName: "Nested" */ "../views/nested/Nested"),
+    component: renderRouterView,
     children: [
       {
-        path: "/nested/menu1",
+        path: "menu1",
         name: "Menu1",
         meta: {
           title: "Menu1"
@@ -54,17 +62,16 @@ const routes = [
           import(/* webpackChunkName: "Menu1" */ "../views/nested/Menu1")
       },
       {
-        path: "/nested/menu2",
+        path: "menu2",
         name: "menu2",
         meta: {
           title: "Menu2",
           icon: "mdi-menu"
         },
-        component: () =>
-          import(/* webpackChunkName: "Menu2" */ "../views/nested/menu2/Menu2"),
+        component: renderRouterView,
         children: [
           {
-            path: "/nested/menu2/menu2_1",
+            path: "menu2_1",
             name: "Menu2_1",
             meta: {
               title: "Menu2-1"
@@ -75,19 +82,16 @@ const routes = [
               )
           },
           {
-            path: "/nested/menu2/menu2_2",
+            path: "menu2_2",
             name: "Menu2_2",
             meta: {
               title: "Menu2-2",
               icon: "mdi-menu"
             },
-            component: () =>
-              import(
-                /* webpackChunkName: "Menu2_2" */ "../views/nested/menu2/menu2-2/Menu2_2"
-              ),
+            component: renderRouterView,
             children: [
               {
-                path: "/nested/menu2/menu2_2/menu2_2_1",
+                path: "menu2_2_1",
                 name: "Menu2_2_1",
                 meta: {
                   title: "Menu2-2-1"
@@ -98,7 +102,7 @@ const routes = [
                   )
               },
               {
-                path: "/nested/menu2/menu2_2/menu2_2_2",
+                path: "menu2_2_2",
                 name: "Menu2_2_2",
                 meta: {
                   title: "Menu2-2-2"
@@ -143,7 +147,7 @@ const routes = [
   },
   {
     path: "*",
-    name: "NotFound",
+    redirect: "/404",
     hideInMenu: true
   }
 ];
