@@ -1,7 +1,8 @@
 <template>
   <nav>
     <v-navigation-drawer permanent v-model="drawer" app>
-      <v-nested-list :propsRoutes="routes" />
+      <!-- 传递当前路由表 -->
+      <v-nested-list :propsRoutes="$router.options.routes" />
     </v-navigation-drawer>
   </nav>
 </template>
@@ -9,16 +10,11 @@
 <script>
 import VNestedList from "./VNestedList";
 export default {
-  name: "NavBar",
+  name: "VNavBar",
   data() {
     return {
       drawer: true
     };
-  },
-  computed: {
-    routes() {
-      return this.$router.options.routes;
-    }
   },
   components: { VNestedList }
 };
