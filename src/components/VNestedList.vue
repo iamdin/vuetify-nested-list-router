@@ -1,6 +1,7 @@
 <template>
   <v-list>
     <div v-for="route in routes" :key="route.path">
+      <!-- group绑定当前路由实现List的自动展开     -->
       <v-list-group
         :group="route.path"
         v-if="route.children"
