@@ -15,7 +15,7 @@ Vue.use(VueRouter);
  *   }
  * · 每个含有children属性的对象都要有自己的component，且其中包含 <router-view />，保证子组件能够渲染
  * · 嵌套路由的path必须填写全部路径，例：/nested/menu2/menu2_2/menu2_2_1
- *  （ 递归List组件设计之初未考虑到嵌套路由的渲染问题，导致使用这种解决方案 ）
+ *  （ 递归List组件设计之初未考虑到嵌套路由的问题，导致使用这种解决方案 ）
  * 
  */
 
