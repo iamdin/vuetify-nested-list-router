@@ -1,31 +1,17 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Dashboard from "../views/Dashboard";
+import Layout from "../components/Layout";
 
 Vue.use(VueRouter);
-
-/*
- * 基于递归组件的路由表的编写遵循以下原则：
-
- * · hideInMenu为true时，该路由将不会渲染在侧边导航栏中
- * · 路径对象没有 meta 属性时，hideInMenu必须为true
- * · meta：{ 
- *     title //  导航栏列表文本
- *     icon  // 导航栏列表图标，没有则不会渲染
- *   }
- * · 每个含有children属性的对象都要有自己的component，且其中包含 <router-view />，保证子组件能够渲染
- *   使用render函数只渲染<router-view>标签，不需要单独写一个.vue单文件组件
- *
- * · 使用命名路由导航，每个路由的name属性要唯一
- */
 
 const renderRouterView = { render: h => h("router-view") };
 
 const routes = [
   {
-    path: "/",
-    redirect: "/dashboard",
-    hideInMenu: true
+    path: "/login",
+    hideInMenu: true,
+    component: () => import(/* webpackChunkName: "Github" */ "../views/Login")
   },
   {
     path: "/404",
@@ -35,17 +21,25 @@ const routes = [
       import(/* webpackChunkName: "Github" */ "../views/NotFound")
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    meta: { title: "Dashboard", icon: "mdi-view-dashboard" },
-    component: Dashboard
+    path: "/",
+    redirect: "/dashboard",
+    component: Layout,
+    children: [
+      {
+        path: "dashboard",
+        name: "Dashboard",
+        component: () =>
+          import(/* webpackChunkName: "Github" */ "../views/Dashboard"),
+        meta: { title: "Dashboard", icon: "mdi-view-dashboard" }
+      }
+    ]
   },
   {
     path: "/nested",
     name: "Nested",
     meta: { title: "Nested", icon: "mdi-xbox-controller-menu" },
     redirect: { name: "Menu1" },
-    component: renderRouterView,
+    component: Layout,
     children: [
       {
         path: "menu1",
@@ -119,9 +113,16 @@ const routes = [
   },
   {
     path: "/github",
-    name: "Github",
-    meta: { title: "Github", icon: "mdi-github-circle" },
-    component: () => import(/* webpackChunkName: "Github" */ "../views/Github")
+    component: Layout,
+    children: [
+      {
+        path: "github",
+        name: "Github",
+        meta: { title: "Github", icon: "mdi-github-circle" },
+        component: () =>
+          import(/* webpackChunkName: "Github" */ "../views/Github")
+      }
+    ]
   },
   {
     path: "*",
